@@ -1,7 +1,12 @@
-﻿using Microsoft.Xna.Framework;
+﻿using labo_1.Input;
+using labo_1.Interfaces;
+using labo_1.Managers;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Reflection.Metadata;
+using System.Xml.Serialization;
 
 namespace labo_1
 {
@@ -10,6 +15,7 @@ namespace labo_1
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private Texture2D _texture;
+        private BlockFactory _map;
         Hero hero;
 
 
@@ -23,7 +29,6 @@ namespace labo_1
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            
             base.Initialize();
         }
 
@@ -34,19 +39,23 @@ namespace labo_1
             // TODO: use this.Content to load your game content here
             _texture = Content.Load<Texture2D>("sprite");
 
+            _spriteBatch = new SpriteBatch(GraphicsDevice);
+
+
 
             InitializeGameObjects();
         }
 
         private void InitializeGameObjects()
         {
-            hero = new Hero(_texture);
+            hero = new Hero(_texture, new KeyboardReader());
         }
 
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+
 
             // TODO: Add your update logic here
 
@@ -65,7 +74,8 @@ namespace labo_1
             _spriteBatch.End();
             base.Draw(gameTime);
 
-            
+
         }
+
     }
 }
