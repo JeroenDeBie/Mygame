@@ -1,6 +1,7 @@
 ﻿using labo_1.Input;
 using labo_1.Interfaces;
 using labo_1.Managers;
+using labo_1.Models;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -16,6 +17,11 @@ namespace labo_1
         private SpriteBatch _spriteBatch;
         private Texture2D _texture;
         private BlockFactory _map;
+        Texture2D blokTexture;
+        Rectangle blok;
+        Vector2 positie
+            = new Vector2(0, 0);
+
         Hero hero;
 
 
@@ -34,14 +40,16 @@ namespace labo_1
 
         protected override void LoadContent()
         {
-            _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
             _texture = Content.Load<Texture2D>("sprite");
 
+           
+
+            blokTexture = new Texture2D(GraphicsDevice, 1, 1);
+            blokTexture.SetData(new[] { Color.White });
+
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-
-
 
             InitializeGameObjects();
         }
@@ -61,6 +69,7 @@ namespace labo_1
 
             hero.Update(gameTime);
             base.Update(gameTime);
+
         }
 
         protected override void Draw(GameTime gameTime)

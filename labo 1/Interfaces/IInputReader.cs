@@ -10,7 +10,7 @@ namespace labo_1.Interfaces
 {
     internal interface IInputReader
     {
-        Vector2 ReadInput();
+        Vector2 ReadInput(bool isGrounded);
         public bool IsDestinationInput { get; }
     }
 }

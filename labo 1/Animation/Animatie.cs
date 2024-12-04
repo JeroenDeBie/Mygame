@@ -34,7 +34,7 @@ namespace labo_1.Animation
             Currentframe = frames[counter];
 
             frameMovement += Currentframe.SourceRectangle.Width * gameTime.ElapsedGameTime.TotalSeconds;
-            if (frameMovement >= Currentframe.SourceRectangle.Width/14)
+            if (frameMovement >= Currentframe.SourceRectangle.Width/5)
             {
                 counter++;
                 frameMovement = 0;

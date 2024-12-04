@@ -7,7 +7,7 @@ namespace labo_1.Input
     internal class MouseReader : IInputReader
     {
         public bool IsDirectional => true;
-        public Vector2 ReadInput()
+        public Vector2 ReadInput(bool isGrounded)
         {
             MouseState state = Mouse.GetState();
             Vector2 directionMouse = new Vector2(state.X, state.Y);
