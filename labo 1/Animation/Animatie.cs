@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace labo_1.Animation
 {
@@ -29,12 +30,18 @@ namespace labo_1.Animation
             Currentframe = frames[0];
         }
 
+        public void ClearFrames()
+        {
+            frames.Clear();
+            counter = 0;
+        }
+
         public void Update(GameTime gameTime)
         {
-            Currentframe = frames[counter];
+             Currentframe = frames[counter];
 
             frameMovement += Currentframe.SourceRectangle.Width * gameTime.ElapsedGameTime.TotalSeconds;
-            if (frameMovement >= Currentframe.SourceRectangle.Width/5)
+            if (frameMovement >= Currentframe.SourceRectangle.Width/10)
             {
                 counter++;
                 frameMovement = 0;

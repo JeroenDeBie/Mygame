@@ -25,8 +25,8 @@ namespace labo_1
         private Vector2 mouseVector;
         float gravity = 0.5f;
         private Vector2 velocity;
-        private float grounded = 400;
-        public bool isGrounded = false;
+        private float grounded = 950f;
+         public bool isGrounded = false;
         private Vector2 Position2;
         private float friction = 0.9f;
 
@@ -41,23 +41,37 @@ namespace labo_1
             heroTexture = texture;
             this.InputReader = inputReader;
             animatie = new Animatie();
-
-
-
-
-
             this.Position2 = new Vector2(10, 10);
             this.Speed = new Vector2(1, 1);
             versnelling = new Vector2(0.1f, 0.1f);
         }
 
+        private enum AnimationState
+        {
+            Idle, Moving    
+        }
+
+        private AnimationState currentAnimationState = AnimationState.Idle;
+
+        private bool isFlipped;
         public void Update(GameTime gameTime)
         {
-            Move();
+            var direction = InputReader.ReadInput(isGrounded);
 
-
-            if (state.IsKeyDown(Keys.Right))
+            if (direction.X < 0)
             {
+                isFlipped = true;
+            }
+            if (direction.X > 0)
+            {
+                isFlipped = false;
+            }
+
+            if (direction.X != 0)
+            {
+                currentAnimationState = AnimationState.Moving;
+
+                
                 animatie.AddFrame(new AnimationFrame(new Rectangle(314, 15, 29, 40)));
                 animatie.AddFrame(new AnimationFrame(new Rectangle(345, 15, 19, 40)));
                 animatie.AddFrame(new AnimationFrame(new Rectangle(366, 15, 22, 40)));
@@ -72,13 +86,18 @@ namespace labo_1
             }
             else
             {
+                currentAnimationState = AnimationState.Idle;
+
+                animatie.ClearFrames();
                 animatie.AddFrame(new AnimationFrame(new Rectangle(208, 15, 32, 40)));
                 animatie.AddFrame(new AnimationFrame(new Rectangle(242, 15, 32, 40)));
+
             }
 
             //MoveWithMouse(GetMouseState());
-            
+
             animatie.Update(gameTime);
+            Move();
         }
 
         private Vector2 GetMouseState()
@@ -144,7 +163,7 @@ namespace labo_1
             }
             else if (Position.Y < grounded)
             {
-                
+
                 isGrounded = false;
             }
 
@@ -165,7 +184,10 @@ namespace labo_1
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(heroTexture, Position2, animatie.Currentframe.SourceRectangle, Color.White);
+
+            SpriteEffects effects = isFlipped ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+
+            spriteBatch.Draw(heroTexture, Position2, animatie.Currentframe.SourceRectangle, Color.White,0f, Vector2.Zero,1f,effects,0f);
 
 
         }

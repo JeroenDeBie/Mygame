@@ -17,7 +17,5 @@ namespace labo_1
 
 
 
-
-
     }
 }
